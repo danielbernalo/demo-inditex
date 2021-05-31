@@ -9,4 +9,5 @@
 
 rootProject.name = 'inditex'
 
-include('prices-worker', 'prices-api')
+include('commons', 'prices-worker', 'prices-api')
+
