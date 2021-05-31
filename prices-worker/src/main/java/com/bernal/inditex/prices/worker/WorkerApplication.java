@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class WorkerApplication {
+
 	@Bean
 	public CommandLineRunner applicationRunner() {
 		return new WorkerRunner();
