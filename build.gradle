@@ -13,7 +13,8 @@ subprojects {
             'logback'    : '1.2.3',
             'javaxInject': '1',
             'flyway'     : '7.9.1',
-            'opencsv'    : '5.1'
+            'opencsv'    : '5.1',
+            'jodaTime'   : '2.10.10'
     ]
 
     buildscript {
