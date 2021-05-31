@@ -18,13 +18,12 @@ repositories {
 }
 
 dependencies {
+    implementation project(":commons")
     implementation "org.springframework.boot:spring-boot-starter-jdbc"
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter'
 
     implementation "com.opencsv:opencsv:${depVersions.opencsv}"
     implementation "org.flywaydb:flyway-core:${depVersions.flyway}"
-    runtimeOnly 'com.h2database:h2'
     implementation "joda-time:joda-time:${depVersions.jodaTime}"
 
     testImplementation 'org.awaitility:awaitility:3.1.2'
