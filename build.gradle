@@ -1,0 +1,46 @@
+allprojects {
+    repositories {
+        mavenCentral()
+
+    }
+}
+
+subprojects {
+
+    // Dependencies versions
+    ext.depVersions = [
+            'lombok'     : '1.18.10',
+            'logback'    : '1.2.3',
+            'javaxInject': '1',
+            'flyway'     : '7.9.1',
+            'opencsv'    : '5.1'
+    ]
+
+    buildscript {
+        repositories {
+            jcenter()
+            mavenCentral()
+        }
+
+        dependencies {
+            classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.1"
+        }
+    }
+
+    apply plugin: 'java'
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter'
+
+        implementation "javax.inject:javax.inject:${depVersions.javaxInject}"
+        implementation "ch.qos.logback:logback-classic:${depVersions.logback}"
+
+        compileOnly "org.projectlombok:lombok:${depVersions.lombok}"
+        annotationProcessor "org.projectlombok:lombok:${depVersions.lombok}"
+        annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+}
