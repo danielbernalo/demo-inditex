@@ -1,27 +1,29 @@
 package com.bernal.inditex.prices.worker.services;
 
-import com.bernal.inditex.prices.commons.domain.repository.PricesRepository;
-import com.bernal.inditex.prices.worker.domain.Price;
+import com.bernal.inditex.prices.domain.entity.Price;
+import com.bernal.inditex.prices.domain.repository.PricesRepository;
 import com.bernal.inditex.prices.worker.ingestion.reader.CsvReader;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 @Slf4j
 public class FileLoadPricesService implements LoaderPricesService {
 
-	private final CsvReader<Price> csvReader;
+	@Autowired
+	CsvReader<Price> csvReader;
 
 	@Autowired
 	PricesRepository pricesRepository;
 
-	public FileLoadPricesService(CsvReader<Price> csvReader) {
-		this.csvReader = csvReader;
-	}
 
 	@Override
 	public void load() {
 		List<Price> csv = csvReader.read();
-		log.info(csv.toString());
+		pricesRepository.save(csv.get(0));
+		log.info(pricesRepository.findAll().get(0).toString());
 	}
+
 }

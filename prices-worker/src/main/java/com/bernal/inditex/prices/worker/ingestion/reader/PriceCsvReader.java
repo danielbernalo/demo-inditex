@@ -2,10 +2,11 @@ package com.bernal.inditex.prices.worker.ingestion.reader;
 
 import static java.lang.Integer.parseInt;
 
-import com.bernal.inditex.prices.worker.domain.Price;
+import com.bernal.inditex.prices.domain.entity.Price;
 import com.opencsv.exceptions.CsvException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Setter;
@@ -28,10 +29,7 @@ public class PriceCsvReader implements CsvReader<Price> {
 	@Override
 	public List<Price> read() {
 		try {
-			return read(filePath).stream().map(
-				line -> new Price(parseInt(line[0]), parseDate(line[1]), parseDate(line[2]), parseInt(line[3]),
-					parseInt(line[4]), parseInt(line[5]), Double.valueOf(line[6]), line[7], parseDate(line[8])))
-				.collect(Collectors.toList());
+			return read(filePath).stream().map(line -> createPrice(line)).collect(Collectors.toList());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (CsvException e) {
@@ -40,10 +38,22 @@ public class PriceCsvReader implements CsvReader<Price> {
 		return new ArrayList<>();
 	}
 
-	private Long parseDate(String dateString) {
-		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd-HH.mm.ss");
-		return DateTime.parse(dateString, fmt).getMillis();
+	private Price createPrice(String[] line) {
+		return Price.builder()
+			.brandId(parseInt(line[0]))
+			.starDate(parseDate(line[1]))
+			.endDate(parseDate(line[2]))
+			.priceList(parseInt(line[3]))
+			.productId(parseInt(line[4]))
+			.priority(parseInt(line[5]))
+			.price(Double.valueOf(line[6]))
+			.currency(line[7])
+			.lastUpdate(parseDate(line[8]))
+			.build();
 	}
 
-
+	private Date parseDate(String dateString) {
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd-HH.mm.ss");
+		return DateTime.parse(dateString, fmt).toDate();
+	}
 }

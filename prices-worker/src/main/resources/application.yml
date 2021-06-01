@@ -1,11 +1,11 @@
 spring:
   datasource:
     url: jdbc:h2:file:./data/prices
-
-  h2:
-    console:
-      enabled: true
-      path: /h2
+    driverClassName: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
 
 flyway:
   enabled: true
