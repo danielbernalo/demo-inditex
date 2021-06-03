@@ -1,25 +1,33 @@
 package com.bernal.inditex.prices.worker;
 
-import com.bernal.inditex.prices.worker.jobs.WorkerRunner;
+
+import com.bernal.inditex.prices.worker.domain.errors.MissingFilePathException;
+import com.bernal.inditex.prices.worker.service.LoaderPrices;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.context.annotation.Bean;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableJpaRepositories("com.bernal.inditex.prices.domain.repository")
-@EntityScan("com.bernal.inditex.prices.domain.entity")
-public class WorkerApplication {
+@ComponentScan("com.bernal.inditex")
+@Slf4j
+public class WorkerApplication implements CommandLineRunner {
 
-	@Bean
-	public CommandLineRunner applicationRunner() {
-		return new WorkerRunner();
-	}
+	@Autowired
+	LoaderPrices loaderPrices;
 
 	public static void main(String[] args) {
 		SpringApplication.run(WorkerApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws Exception {
+		try {
+			loaderPrices.load();
+		} catch (MissingFilePathException e) {
+			log.error("Please check args index (0) is file name", e);
+		}
+	}
 }
