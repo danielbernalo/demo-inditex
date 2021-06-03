@@ -21,24 +21,20 @@ class PriceCsvReaderTest {
 	public static final String RESOURCES_NOT_EXISTS_FILE_CSV = "./resources/not_exists_file.csv";
 	public static final String RESOURCES_VALID_FILE_CSV = "./src/test/resources/data_import_test.csv";
 
-	@MockBean
-	ApplicationArguments args;
 
 	CsvReader<Price> csvReader;
 
 	@Test
 	@DisplayName("given a invalid file path, when try read csv import, then return and MissingFilePathException")
 	void testInvalidFilePath() {
-		when(args.getNonOptionArgs()).thenReturn(List.of(RESOURCES_NOT_EXISTS_FILE_CSV));
-		csvReader = new PriceCsvReader(args);
+		csvReader = new PriceCsvReader(RESOURCES_NOT_EXISTS_FILE_CSV);
 		assertThrows(MissingFilePathException.class, () -> csvReader.read());
 	}
 
 	@Test
 	@DisplayName("given a valid file path, when try read csv import, then return list of prices")
 	void testValidFilePath() throws MissingFilePathException {
-		when(args.getNonOptionArgs()).thenReturn(List.of(RESOURCES_VALID_FILE_CSV));
-		csvReader = new PriceCsvReader(args);
+		csvReader = new PriceCsvReader(RESOURCES_VALID_FILE_CSV);
 		List<Price> result = csvReader.read();
 		assertNotNull(result);
 		assertEquals(result.size(), 1);

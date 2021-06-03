@@ -1,6 +1,6 @@
 package com.bernal.inditex.prices.worker.ingestion.readers;
 
-import static com.bernal.inditex.domain.converters.Utils.parseDate;
+import static com.bernal.inditex.domain.converters.Utils.parseDateToLong;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
@@ -13,17 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+
 public class PriceCsvReader implements CsvReader<Price> {
 
 	private String filePath;
 
-	public PriceCsvReader(ApplicationArguments args) {
-		filePath = args.getNonOptionArgs().get(0);
+	public PriceCsvReader(String filePath) {
+		this.filePath = filePath;
 	}
 
 	@Override
@@ -42,14 +40,14 @@ public class PriceCsvReader implements CsvReader<Price> {
 		try {
 			return Price.builder()
 				.brandId(parseLong(line[0]))
-				.starDate(parseDate(line[1]))
-				.endDate(parseDate(line[2]))
+				.starDate(parseDateToLong(line[1]))
+				.endDate(parseDateToLong(line[2]))
 				.priceList(parseInt(line[3]))
 				.productId(parseLong(line[4]))
 				.priority(parseLong(line[5]))
 				.price(Double.valueOf(line[6]))
 				.currency(line[7])
-				.lastUpdate(parseDate(line[8]))
+				.lastUpdate(parseDateToLong(line[8]))
 				.build();
 		} catch (ParseDateException e) {
 			log.info("Error al tratar de parsear fecha invalida", e);
