@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface PriceService {
+
 	Price findWithPeriodTime(Long currentDate, Long brandId, Long productId);
 
 	void save(Price item);

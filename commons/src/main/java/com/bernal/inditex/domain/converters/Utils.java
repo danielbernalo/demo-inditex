@@ -7,11 +7,20 @@ import org.joda.time.format.DateTimeFormatter;
 
 public class Utils {
 
-	public static Long parseDate(String dateString) throws ParseDateException {
+	public static Long parseDateToLong(String dateString) throws ParseDateException {
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd-HH.mm.ss");
 		try {
-		return DateTime.parse(dateString, fmt).getMillis();
+			return DateTime.parse(dateString, fmt).getMillis();
 
+		} catch (Exception e) {
+			throw new ParseDateException();
+		}
+	}
+
+	public static String parseLongToDate(Long date) throws ParseDateException {
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd-HH.mm.ss");
+		try {
+			return new DateTime(date).toString(fmt);
 		} catch (Exception e) {
 			throw new ParseDateException();
 		}

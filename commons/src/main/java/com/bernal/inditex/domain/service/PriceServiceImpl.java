@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PriceServiceImpl implements PriceService{
+public class PriceServiceImpl implements PriceService {
 
 	@Autowired
 	PricesRepository pricesRepository;
 
 	@Override
 	public Price findWithPeriodTime(Long currentDate, Long brandId, Long productId) {
-		return pricesRepository.findWithPeriodTime(currentDate,brandId, productId).stream().findFirst().orElse(null);
+		return pricesRepository.findWithPeriodTime(currentDate, brandId, productId).stream().findFirst().orElse(null);
 	}
 
 	@Override

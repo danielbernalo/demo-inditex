@@ -4,7 +4,7 @@ import static com.bernal.inditex.BuilderPrices.BRAND_ID;
 import static com.bernal.inditex.BuilderPrices.PRICE;
 import static com.bernal.inditex.BuilderPrices.PRODUCT_ID;
 import static com.bernal.inditex.BuilderPrices.buildPriceWithDateTime;
-import static com.bernal.inditex.domain.converters.Utils.parseDate;
+import static com.bernal.inditex.domain.converters.Utils.parseDateToLong;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
@@ -40,7 +40,7 @@ public class PriceServiceTest {
 	@DisplayName("Unit:given a exists date time then return best price")
 	void testOK() throws ParseDateException {
 		//given
-		Long PARSED_DATE_TIME = parseDate("2020-06-16-10.00.00");
+		Long PARSED_DATE_TIME = parseDateToLong("2020-06-16-10.00.00");
 		when(priceService.findWithPeriodTime(PARSED_DATE_TIME, BRAND_ID, PRODUCT_ID))
 			.thenReturn(buildPriceWithDateTime(PARSED_DATE_TIME, PRICE));
 

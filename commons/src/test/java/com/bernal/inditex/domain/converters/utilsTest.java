@@ -1,6 +1,7 @@
 package com.bernal.inditex.domain.converters;
 
-import static com.bernal.inditex.domain.converters.Utils.parseDate;
+import static com.bernal.inditex.domain.converters.Utils.parseDateToLong;
+import static com.bernal.inditex.domain.converters.Utils.parseLongToDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -17,12 +18,18 @@ class utilsTest {
 	@Test
 	@DisplayName("given a string date invalid when parse then result a ParseDateException")
 	void parseDateInvalid() throws ParseDateException {
-		assertThrows(ParseDateException.class, () -> parseDate(DATE_TIME_INVALID));
+		assertThrows(ParseDateException.class, () -> parseDateToLong(DATE_TIME_INVALID));
 	}
 
 	@Test
 	@DisplayName("given a string date valid when parse then result a datetime in millis (unixstamp)")
 	void parseDateValid() throws ParseDateException {
-		assertEquals(parseDate(DATE_TIME_VALID), DATE_TIME_VALID_EXPECTED_PARSE);
+		assertEquals(parseDateToLong(DATE_TIME_VALID), DATE_TIME_VALID_EXPECTED_PARSE);
+	}
+
+	@Test
+	@DisplayName("given a long date valid when parse then result a datetime in millis (unixstamp)")
+	void parseLongDateValid() throws ParseDateException {
+		assertEquals(parseLongToDate(DATE_TIME_VALID_EXPECTED_PARSE), DATE_TIME_VALID);
 	}
 }
