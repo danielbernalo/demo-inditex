@@ -1,11 +1,9 @@
-package com.bernal.inditex.prices.domain.entity;
+package com.bernal.inditex.domain.entity;
 
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,31 +13,33 @@ import lombok.Data;
 @AllArgsConstructor
 @Entity
 @Builder
+@IdClass(PriceId.class)
 @Table(name = "PRICES")
 public class Price {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
-	private Integer id;
 	@Column(name = "BRAND_ID")
-	private Integer brandId;
+	private Long brandId;
+	@Id
 	@Column(name = "START_DATE")
-	private Date starDate;
+	private Long starDate;
+	@Id
 	@Column(name = "END_DATE")
-	private Date endDate;
+	private Long endDate;
 	@Column(name = "PRICE_LIST")
 	private Integer priceList;
+	@Id
 	@Column(name = "PRODUCT_ID")
-	private Integer productId;
+	private Long productId;
 	@Column(name = "PRIORITY")
-	private Integer priority;
+	private Long priority;
 	@Column(name = "PRICE")
 	private Double price;
+	@Id
 	@Column(name = "CURR")
 	private String currency;
 	@Column(name = "LAST_UPDATE")
-	private Date lastUpdate;
+	private Long lastUpdate;
 
 	public Price() {
 	}
